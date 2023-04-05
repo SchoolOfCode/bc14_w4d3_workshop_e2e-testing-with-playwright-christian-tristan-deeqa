@@ -35,8 +35,18 @@ test ('Click on the add button after filling the box with text', async ({ page }
 });
 
 
+
 // If you add something to the text box, does it create a new list item?
 
+test ('If you add something to the text box, does it create a new list item?', async ({ page }) => {
+    await page.goto('http://localhost:3000');
+    const input = page.getByLabel('New Todo:');
+    await input.fill ('this is a test');
+    //await expect (input).toHaveValue ('this is a test');
+    await page.getByRole('button').click();
+    const todoList = page.getByRole('list');
+    await expect(todoList).toContainText('this is a test'); 
+});
 // Check to see if the checkbox can be checked
 
 // check to see if text becomes strikethrough
