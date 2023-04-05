@@ -3,28 +3,37 @@ import { test, expect } from '@playwright/test';
 
 // Navitgate to website 
 test ('Navigate to website', async ({ page }) => {
-    await page.goto('http://localhost:52237/  ');
+    await page.goto('http://localhost:3000');
 });
 
-// Clicking on the text box
-test ('Clicking on the text box', async ({ page }) => {
-    await page.goto('http://localhost:52237/ ');
-    await page.getByRole('new-todo').click();
-    await expect("new-todo").toBeEnabled()
-});
+// Clicking on the text box and filling it
 
-    
 
-// type text into text box
-test ('Typing in the box', async ({ page }) => {
-    await page.goto('http://localhost:52237/ ');
-    await page.getByRole('new-todo').click();
-    await page.type('input', 'Hello World');
-    expect(textbox).toContainText('Hello World');
-});
-
+test ('Clicking on the text box and filling it with the text "test"', async ({ page }) => {
+    await page.goto('http://localhost:3000');
+    const input = page.getByLabel('New Todo:');
+  // locate input and assign it to a variable
+    await input.fill ('test');
+    await expect (input).toHaveValue ('test');
+});    
 
 // Click on the add button
+
+test ('Click on the add button', async ({ page }) => {
+    await page.goto('http://localhost:3000');
+    await page.getByRole('button').click();
+});
+
+// Test to click the button after filling the box with text
+
+test ('Click on the add button after filling the box with text', async ({ page }) => {
+    await page.goto('http://localhost:3000');
+    const input = page.getByLabel('New Todo:');
+    await input.fill ('test');
+    await expect (input).toHaveValue ('test');
+    await page.getByRole('button').click();
+});
+
 
 // If you add something to the text box, does it create a new list item?
 
@@ -41,8 +50,3 @@ test ('Typing in the box', async ({ page }) => {
 // Check to see if delete button deletes item on click
 
 // Check to see if it doesn't allow an empty item to be added to the list
-// test ('Clicking on the text box', async ({ page }) => {
-//     await page.goto('http://localhost:52237/ ');
-//     await page.getByLabel(`new-todo`).click();
-//     await expect("new-todo").toBeEnabled()
-// });
