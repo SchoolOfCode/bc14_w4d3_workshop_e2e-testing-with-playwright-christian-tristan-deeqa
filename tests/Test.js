@@ -8,7 +8,6 @@ test ('Navigate to website', async ({ page }) => {
 
 // Clicking on the text box and filling it
 
-
 test ('Clicking on the text box and filling it with the text "test"', async ({ page }) => {
     await page.goto('http://localhost:3000');
     const input = page.getByLabel('New Todo:');
@@ -34,8 +33,6 @@ test ('Click on the add button after filling the box with text', async ({ page }
     await page.getByRole('button').click();
 });
 
-
-
 // If you add something to the text box, does it create a new list item?
 
 test ('If you add something to the text box, does it create a new list item?', async ({ page }) => {
@@ -47,7 +44,19 @@ test ('If you add something to the text box, does it create a new list item?', a
     const todoList = page.getByRole('list');
     await expect(todoList).toContainText('this is a test'); 
 });
+
 // Check to see if the checkbox can be checked
+
+test ('Check to see if the checkbox can be checked', async ({ page }) => {
+    await page.goto('http://localhost:3000'); 
+    const input = page.getByLabel('New Todo:');
+    await input.fill ('this is a test');
+    await page.getByRole('button').click();
+    const checkbox = page.getByRole('checkbox');
+    await checkbox.check();
+    await expect(checkbox).toBeChecked();
+});
+
 
 // check to see if text becomes strikethrough
 
